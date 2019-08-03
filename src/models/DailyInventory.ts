@@ -1,12 +1,24 @@
-import { Column, Model, Table } from "sequelize-typescript";
-
+import { Column, Model, Table, DataType } from "sequelize-typescript";
+import { DataTypes } from "sequelize/types";
 @Table
-class User extends Model<User> {
+class DailyInventory extends Model<DailyInventory> {
 
   @Column
-  public name: string;
+  public product_id: string;
 
   @Column
-  public birthday: Date;
+  public date: Date;
+
+  @Column
+  public location: string;
+
+  @Column(DataType.FLOAT)
+  public on_hand_quantity: number;
+
+  @Column(DataType.FLOAT)
+  public unit_cost: number;
+
+  @Column(DataType.FLOAT)
+  public on_hand_value: number;
 }
-export default User;
+export default DailyInventory;

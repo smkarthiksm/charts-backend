@@ -1,3 +1,4 @@
+import path from "path";
 import { Sequelize } from "sequelize-typescript";
 import * as constants from "../constants/DatabaseContants";
 
@@ -6,6 +7,9 @@ const db = new Sequelize({
   dialect: "postgres",
   username: "postgres",
   password: "rootroot",
-  modelPaths: [__dirname + "/models"]
+  modelPaths: [path.join(__dirname, `../models/`)],
+  define: {
+    freezeTableName: true
+  }
 });
 export default db;
