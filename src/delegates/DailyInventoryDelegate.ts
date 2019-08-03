@@ -1,7 +1,4 @@
-// import ExceptionConstants from "../constants/ExceptionConstants";
-// import ApplicationError from "../exceptionHandlers/ApplicationError";
 import csv from "csvtojson";
-import fs from "fs";
 import path from "path";
 import moment, { utc } from 'moment';
 
@@ -10,6 +7,10 @@ import DailyInventoryDao from "../dao/DailyInventoryDao";
 import DailyInventoryModel from "../models/DailyInventory";
 import WeekModeDailyInventory from "../dtos/WeekModeDailyInventory";
 class DailyInventoryDelegate {
+
+  /**
+   * Load csv data
+   */
   public static async loadCsv() {
     try {
       const response = await DailyInventoryDao.getAll();
@@ -22,6 +23,11 @@ class DailyInventoryDelegate {
     }
   }
 
+  /**
+   * Get DailyInventory data based on month and access mode
+   * @param month 
+   * @param mode 
+   */
   public static async getData(month: string, mode: string) {
     try {
       if (mode === 'day') {
@@ -29,7 +35,6 @@ class DailyInventoryDelegate {
       }
       else if (mode === 'week') {
         const response = await DailyInventoryDao.getByWeek(month);
-        console.log(response);
         const weekModeDailyInventory: Array<WeekModeDailyInventory> = [];
         response.forEach((element, index) => {
           weekModeDailyInventory.push(new WeekModeDailyInventory(`Week${index + 1}`, (element as any)["sum"]))
@@ -41,7 +46,10 @@ class DailyInventoryDelegate {
     }
   }
 
-
+  /**
+   * Parse the csv file and insert data
+   * @param csvFile 
+   */
   public static async loadCsvFromFile(csvFile: any) {
     try {
       let csvData: Array<DailyInventoryModel> = [];

@@ -2,6 +2,9 @@ import path from "path";
 import { Sequelize } from "sequelize-typescript";
 import * as constants from "../constants/DatabaseContants";
 
+/**
+ * Database configuration
+ */
 const db = new Sequelize({
   database: constants.DATABASE_NAME,
   dialect: "postgres",

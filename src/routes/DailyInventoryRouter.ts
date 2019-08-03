@@ -1,7 +1,8 @@
 import express from "express";
 const router = express.Router();
 import DailyInventoryController from "../controllers/DailyInventoryController";
-import { raw } from "body-parser";
+import * as ApplicationConstants from "../constants/ApplicationConstants";
+import ApplicationError from "../exceptionHandlers/ApplicationError";
 
 router.get("/getData", async (req, res, next) => {
   try {
@@ -10,7 +11,7 @@ router.get("/getData", async (req, res, next) => {
       res.send(response);
     }
     else {
-      return "Bad"
+      throw new ApplicationError(ApplicationConstants.BAD_REQUEST, 400)
     }
   } catch (err) {
     next(err);

@@ -1,10 +1,12 @@
 import * as sequelize from "sequelize";
+
 import * as DatabaseContants from "../constants/DatabaseContants"
 import DailyInventoryModel from "../models/DailyInventory";
-
-// let ExceptionConstants = require('../constants/ExceptionConstants');
-// let ApplicationError = require('../exceptionHandlers/ApplicationError');
 class DailyInventoryDao {
+
+  /**
+   * Get all DailyInventory data
+   */
   public static async getAll() {
     try {
       return await DailyInventoryModel.findAll();
@@ -13,6 +15,10 @@ class DailyInventoryDao {
     }
   }
 
+  /**
+   * Get DailyInventory data based on month and mode
+   * @param month 
+   */
   public static async getByDay(month: string) {
     try {
       return await DailyInventoryModel.sequelize.query(`SELECT ${DatabaseContants.DATE}, SUM (${DatabaseContants.ON_HAND_VALUE}) FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY ${DatabaseContants.DATE} ORDER BY date ASC;`, {
@@ -24,6 +30,11 @@ class DailyInventoryDao {
       throw err;
     }
   }
+
+  /**
+   * Get DailyInventory data based on month and mode
+   * @param month 
+   */
   public static async getByWeek(month: string) {
     try {
       return await DailyInventoryModel.sequelize.query(`SELECT SUM (${DatabaseContants.ON_HAND_VALUE}) FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY date_trunc('week', ${DatabaseContants.DATE}) ORDER BY date_trunc('week', ${DatabaseContants.DATE}) ASC;`, {
@@ -36,6 +47,10 @@ class DailyInventoryDao {
     }
   }
 
+  /**
+   * 
+   * @param data Insert DailyInventory data
+   */
   public static async insert(data: Array<DailyInventoryModel>) {
     try {
       data.forEach(element => {
