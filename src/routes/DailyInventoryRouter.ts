@@ -4,6 +4,9 @@ import DailyInventoryController from "../controllers/DailyInventoryController";
 import * as ApplicationConstants from "../constants/ApplicationConstants";
 import ApplicationError from "../exceptionHandlers/ApplicationError";
 
+/**
+ * Router to handle DailyInventory APIs
+ */
 router.get("/getData", async (req, res, next) => {
   try {
     if (req.query.month && req.query.mode) {
