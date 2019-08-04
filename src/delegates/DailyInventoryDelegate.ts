@@ -59,8 +59,6 @@ class DailyInventoryDelegate {
       let csvData: Array<DailyInventoryModel> = [];
       const jsonArray = await csv().fromFile(csvFile);
       jsonArray.forEach(element => {
-        console.log(moment(element[ApplicationConstants.DATE]).parseZone().format());
-
         csvData.push(new DailyInventoryModel({
           product_id: element[ApplicationConstants.PRODUCT_ID],
           date: moment(element[ApplicationConstants.DATE]).parseZone().format(),

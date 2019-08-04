@@ -11,7 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(indexRouter);
 
-
 db.authenticate()
   .then(() => {
     console.log("Connection has been established successfully.");
@@ -32,4 +31,4 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(JSON.parse(err.message).status).send(JSON.parse(err.message).message);
 });
 
-app.listen(5000);
+app.listen(3000);

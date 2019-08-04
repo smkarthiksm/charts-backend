@@ -1,4 +1,6 @@
-export const DATABASE_NAME = "sample";
+export const DATABASE_NAME = process.env.POSTGRES_DB;
+export const USERNAME = process.env.POSTGRES_USER;
+export const PASSWORD = process.env.POSTGRES_PASSWORD;
 export const CUSTOMER_TABLE = "DailyInventory";
 export const PRODUCT_ID = "product_id";
 export const DATE = "date";
