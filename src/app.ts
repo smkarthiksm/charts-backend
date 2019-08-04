@@ -1,6 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
-import db from "../src/database/DatabaseWrapper";
+import db from "./database/DatabaseWrapper";
 import indexRouter from "./routes/IndexRouter";
 import DailyInventoryController from "./controllers/DailyInventoryController";
 
