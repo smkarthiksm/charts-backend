@@ -5,7 +5,7 @@ import moment, { utc } from 'moment';
 import * as ApplicationConstants from '../constants/ApplicationConstants';
 import DailyInventoryDao from "../dao/DailyInventoryDao";
 import DailyInventoryModel from "../models/DailyInventory";
-import WeekModeDailyInventory from "../dtos/WeekModeDailyInventory";
+import DailyInventoryChart from "../dtos/DailyInventoryChart";
 class DailyInventoryDelegate {
 
   /**
@@ -30,17 +30,21 @@ class DailyInventoryDelegate {
    */
   public static async getData(month: string, mode: string) {
     try {
+      let response;
+      const dailyInventoryChart: Array<DailyInventoryChart> = [];
       if (mode === 'day') {
-        return await DailyInventoryDao.getByDay(month);
+        response = await DailyInventoryDao.getByDay(month);
+        response.forEach((element) => {
+          dailyInventoryChart.push(new DailyInventoryChart(moment((element as any).date).format("D"), (element as any).on_hand_value_sum))
+        });
       }
       else if (mode === 'week') {
-        const response = await DailyInventoryDao.getByWeek(month);
-        const weekModeDailyInventory: Array<WeekModeDailyInventory> = [];
+        response = await DailyInventoryDao.getByWeek(month);
         response.forEach((element, index) => {
-          weekModeDailyInventory.push(new WeekModeDailyInventory(`Week${index + 1}`, (element as any)["sum"]))
+          dailyInventoryChart.push(new DailyInventoryChart(`Week${index + 1}`, (element as any).on_hand_value_sum))
         });
-        return weekModeDailyInventory;
       }
+      return dailyInventoryChart;
     } catch (err) {
       throw err;
     }

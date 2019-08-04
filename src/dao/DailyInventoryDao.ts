@@ -21,7 +21,7 @@ class DailyInventoryDao {
    */
   public static async getByDay(month: string) {
     try {
-      return await DailyInventoryModel.sequelize.query(`SELECT ${DatabaseContants.DATE}, SUM (${DatabaseContants.ON_HAND_VALUE}) FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY ${DatabaseContants.DATE} ORDER BY date ASC;`, {
+      return await DailyInventoryModel.sequelize.query(`SELECT ${DatabaseContants.DATE}, SUM (${DatabaseContants.ON_HAND_VALUE}) as on_hand_value_sum FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY ${DatabaseContants.DATE} ORDER BY date ASC;`, {
         replacements: { month: month },
         type: sequelize.QueryTypes.SELECT,
         raw: true,
@@ -37,7 +37,7 @@ class DailyInventoryDao {
    */
   public static async getByWeek(month: string) {
     try {
-      return await DailyInventoryModel.sequelize.query(`SELECT SUM (${DatabaseContants.ON_HAND_VALUE}) FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY date_trunc('week', ${DatabaseContants.DATE}) ORDER BY date_trunc('week', ${DatabaseContants.DATE}) ASC;`, {
+      return await DailyInventoryModel.sequelize.query(`SELECT SUM (${DatabaseContants.ON_HAND_VALUE}) as on_hand_value_sum FROM "${DatabaseContants.CUSTOMER_TABLE}" WHERE EXTRACT(MONTH FROM ${DatabaseContants.DATE}) = :month GROUP BY date_trunc('week', ${DatabaseContants.DATE}) ORDER BY date_trunc('week', ${DatabaseContants.DATE}) ASC;`, {
         replacements: { month: month },
         type: sequelize.QueryTypes.SELECT,
         raw: true,

@@ -1,5 +1,5 @@
 import { Column, Model, Table, DataType } from "sequelize-typescript";
-import { DataTypes } from "sequelize/types";
+
 @Table
 class DailyInventory extends Model<DailyInventory> {
 

@@ -1,11 +1,12 @@
 import express, { Application, NextFunction, Request, Response } from "express";
-
+import cors from "cors";
 import db from "../src/database/DatabaseWrapper";
 import indexRouter from "./routes/IndexRouter";
 import DailyInventoryController from "./controllers/DailyInventoryController";
 
 const app: Application = express();
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(indexRouter);
